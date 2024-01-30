@@ -21,9 +21,9 @@ def isWinner():
     #check col
     for col in range(size):
         score = 0
+        temp = board [0][col]
         for row in range(size):
-            temp = board [0][col]
-            if board[row][col] == temp:
+            if board[row][col] == temp and temp!=0:
                 score +=1
             else:
                 break
@@ -33,9 +33,9 @@ def isWinner():
     #check row
     for row in range(size):
         score = 0
+        temp = board [row][0]
         for col in range(size):
-            temp = board [row][0]
-            if board[row][col] == temp:
+            if board[row][col] == temp and temp!=0:
                 score +=1
             else:
                 break
@@ -44,13 +44,13 @@ def isWinner():
     #check diagnoal LR
     temp = board [0][0]
     score = 0
-    if board[1][1] == temp and board[2][2]==temp:
+    if board[1][1] == temp and board[2][2]==temp and temp!=0:
         return True
 
     #check diagnoal RL
     temp = board [0][2]
     score = 0
-    if board[1][1] == temp and board[2][0] ==temp:
+    if board[1][1] == temp and board[2][0] ==temp and temp!=0:
         return True
     return False    
     
@@ -58,36 +58,42 @@ def isWinner():
 while done:
     printBoard()
     while xMove:
-        rowMove = int(input("X Move put row:"))
-        colMove = int(input("X Move put col:"))
-        if legalMove(rowMove, colMove):
-            board[rowMove-1][colMove-1] = "X"
-            xMove = False
-            oMove = True
-            if isWinner():
-                print("X is the Winner")
+        try:
+            rowMove = int(input("X Move put row:"))
+            colMove = int(input("X Move put col:"))
+            if legalMove(rowMove, colMove):
+                board[rowMove-1][colMove-1] = "X"
                 xMove = False
-                oMove = False
-                done = False
+                oMove = True
+                if isWinner():
+                    print("X is the Winner")
+                    xMove = False
+                    oMove = False
+                    done = False
                 
             
-        else:
-             print("Illegal Move!!!")
+            else:
+                print("Illegal Move!!!")
+        except:
+            print("Illegal Move!!!")
     printBoard()
     while oMove:
-        rowMove = int(input("O Move put row:"))
-        colMove = int(input("O Move put col:"))
-        if legalMove(rowMove, colMove):
-            board[rowMove-1][colMove-1] = "O"
-            xMove = True
-            oMove = False
-            if isWinner():
-                print("O is the Winner")
-                xMove = False
+        try:
+            rowMove = int(input("O Move put row:"))
+            colMove = int(input("O Move put col:"))
+            if legalMove(rowMove, colMove):
+                board[rowMove-1][colMove-1] = "O"
+                xMove = True
                 oMove = False
-                done = False
-        else:
-             print("Illegal Move!!!")
+                if isWinner():
+                    print("O is the Winner")
+                    xMove = False
+                    oMove = False
+                    done = False
+            else:
+                print("Illegal Move!!!")
+        except:
+            print("Illegal Move!!!")
         
     
     
